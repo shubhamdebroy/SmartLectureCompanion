@@ -2,6 +2,7 @@ venv/
 __pycache__/
 temp/
 .env
+.streamlit/
 
 *.wav
 *.mp3
