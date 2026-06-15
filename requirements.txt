@@ -1,0 +1,10 @@
+streamlit
+groq
+python-dotenv
+yt-dlp
+ffmpeg-python
+reportlab
+pydub
+openai-whisper
+torch
+transformers
