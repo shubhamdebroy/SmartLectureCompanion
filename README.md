@@ -2,6 +2,8 @@
 
 An AI-powered educational assistant that converts lectures into transcripts, study notes, quizzes, and flashcards using Speech Recognition and Generative AI.
 
+🔗 Live Demo: https://smartlecturecompanion.streamlit.app/
+
 ---
 
 ## Features
