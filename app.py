@@ -34,7 +34,7 @@ h1 {
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.title(" Smart Lecture Companion")
+st.sidebar.title("Smart Lecture Companion")
 
 st.sidebar.markdown("""
 ### Features
@@ -59,7 +59,12 @@ Built using:
 - FFmpeg
 """)
 
-st.title(" Smart Lecture Companion")
+st.sidebar.info(
+    "YouTube downloads may fail on Streamlit Cloud due to "
+    "YouTube restrictions. Uploading lecture files is always supported."
+)
+
+st.title("Smart Lecture Companion")
 st.subheader("AI-Powered Voice-to-Notes Generator")
 
 os.makedirs("temp", exist_ok=True)
@@ -86,7 +91,7 @@ else:
         "Paste YouTube Lecture Link"
     )
 
-if st.button(" Generate AI Notes"):
+if st.button("Generate AI Notes"):
 
     if mode == "📁 Upload Lecture File" and not uploaded_file:
         st.error("Please upload a lecture file.")
@@ -97,7 +102,6 @@ if st.button(" Generate AI Notes"):
         st.stop()
 
     try:
-
         if mode == "📁 Upload Lecture File":
 
             save_path = os.path.join(
@@ -106,28 +110,46 @@ if st.button(" Generate AI Notes"):
             )
 
             with open(save_path, "wb") as f:
-                f.write(
-                    uploaded_file.getbuffer()
-                )
+                f.write(uploaded_file.getbuffer())
 
         else:
 
             with st.spinner(
-                "📥 Downloading YouTube Audio..."
+                " Downloading YouTube Audio..."
             ):
-                save_path = download_youtube_audio(
-                    youtube_link
-                )
+
+                try:
+                    save_path = download_youtube_audio(
+                        youtube_link
+                    )
+
+                except Exception as e:
+
+                    st.warning(
+                        """
+⚠️ This YouTube video cannot be downloaded on Streamlit Cloud.
+
+Possible reasons:
+• YouTube blocked the cloud server IP
+• Private or age-restricted video
+• Region-restricted content
+
+Please upload the lecture audio/video file instead.
+                        """
+                    )
+
+                    st.error(str(e))
+                    st.stop()
 
         with st.spinner(
-            "🎵 Preparing Audio..."
+            " Preparing Audio..."
         ):
             wav_path = convert_to_wav(
                 save_path
             )
 
         with st.spinner(
-            "✂ Splitting Audio..."
+            " Splitting Audio..."
         ):
             chunks = split_audio(
                 wav_path,
