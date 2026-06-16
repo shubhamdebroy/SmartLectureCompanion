@@ -61,7 +61,7 @@ Built using:
 
 st.sidebar.info(
     "YouTube downloads may fail on Streamlit Cloud due to "
-    "YouTube restrictions. Uploading lecture files is always supported."
+    "YouTube restrictions. Uploading lecture files is always supported. To use the YouTube feature, please run the app locally or on a server with unrestricted access."
 )
 
 st.title("Smart Lecture Companion")
